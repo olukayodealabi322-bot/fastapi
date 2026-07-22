@@ -1,14 +1,16 @@
-from typing import Optional
-
 from fastapi import FastAPI
+import os
 
-app = FastAPI()
-
+app = FastAPI(title="AJ Core")
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
+def root():
+    return {"status": "AJ Core is LIVE", "message": "Hello from AJ"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/health")
+def health():
+    return {
+        "serpapi": "loaded" if os.getenv("SERPAPI_KEY") else "missing",
+        "openai": "loaded" if os.getenv("OPENAI_KEY") else "missing",
+        "gemini": "loaded" if os.getenv("GEMINI_KEY") else "missing"
+    }
