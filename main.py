@@ -1,14 +1,12 @@
-from typing import Optional
-
 from fastapi import FastAPI
+import uvicorn
 
 app = FastAPI()
 
-
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
+def read_root():
+    return {"status": "AJ Core is LIVE 🚀"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/health")
+def health():
+    return {"ok": True}
